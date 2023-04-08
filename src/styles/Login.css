@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.LoginDiv{
+    background: #040307;
+    height: 100vh;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding: 3em;
+}
+.titleLogin{
+    color: #864197;
+    margin: 2% 0 4% 0;
+    font-size: 3em;
+}
+Input{
+    margin: 1%;
+}
+Button{
+    margin: 3%;
+}
+.accInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}
+.accInfo p{
+    color: white;
+    font-size: 0.7em;
+    margin: 0.5%;
+}
+.accInfo Link{
+    color: #864197;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin: 0.5%;
+    cursor: pointer;
+}

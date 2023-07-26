@@ -1,75 +1,70 @@
-import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import React, { useState, useEffect,useContext } from "react";
+import { db, auth } from "../firebase";
+import { collection, doc, getDoc } from "firebase/firestore";
+import SubjectNav from "../components/SubjectNav";
+import ChapterList from "../components/ChapterList";
+ 
+import { AuthContext } from "../Context/AuthContext";
+
 
 const Dashboard = () => {
-  const [studentList, setStudentList] = useState([]);
+  const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    // Fetch student data from Firebase Firestore
-    async function fetchStudents() {
-      const studentCol = collection(db, "students");
-      try {
-        const stus = await getDocs(studentCol);
-        const studentListData = stus.docs.map((doc) => doc.data());
-        setStudentList(studentListData);
-        setLoading(false);
-      } catch (error) {
-        setError("Error fetching student data");
-        setLoading(false);
-      }
-    }
+  const { currentUser } = useContext(AuthContext);
 
-    fetchStudents();
+
+  useEffect(() => {
+    // Get the current user's uid from Firebase Authentication
+    const userUid = currentUser.uid;
+    console.log("user in dashboard",userUid)
+    if (userUid) {
+      // Fetch the user's document based on their uid
+      // const a="xT3TsJHhXj6ksUYP6www";
+      // const b= "1"
+      async function fetchStudent() {
+        const studentDocRef = doc(db, "students", userUid);
+        console.log("11111111111111111",studentDocRef)
+        try {
+          const studentDocSnap = await getDoc(studentDocRef);
+          console.log("2222222222",studentDocSnap )
+          if (studentDocSnap.exists()) {
+            setStudent(studentDocSnap.data());
+          } else {
+            setError("User document not found");
+          }
+          setLoading(false);
+        } catch (error) {
+          setError("Error fetching student data");
+          setLoading(false);
+        }
+      }
+
+      fetchStudent();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
-  function makeList() {
-    return studentList.map((student, index) => (
-      <div key={index} className="mb-6">
-        <h1 className="text-2xl font-bold">{student.name}</h1>
-        {Object.keys(student.subjects).map((subjectKey) => {
-          const subject = student.subjects[subjectKey];
-          return (
-            <div key={subjectKey} className="mt-4">
-              <h2 className="text-xl font-semibold">{subject.name}</h2>
-              {Object.keys(subject.chapters).map((chapterKey) => {
-                const chapter = subject.chapters[chapterKey];
-                return (
-                  <div key={chapterKey} className="mt-2">
-                    <h3 className="bg-slate-600 text-white px-2 py-1 rounded">{chapter.name}</h3>
-                    <div className="mt-2">
-                      <h4 className="font-semibold">Notes:</h4>
-                      <ul className="list-disc list-inside">
-                        {chapter.notes.map((note, noteIndex) => (
-                          <li key={noteIndex}>{note}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="mt-2">
-                      <h4 className="font-semibold">Video Links:</h4>
-                      <ul className="list-disc list-inside">
-                        {chapter.vid.map((videoLink, videoIndex) => (
-                          <li key={videoIndex}>
-                            <a href={videoLink} className="text-blue-600 hover:underline">{videoLink}</a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    ));
-  }
-
   return (
-    <div className="p-6">
-      {loading ? <p>Loading...</p> : error ? <p>{error}</p> : makeList()}
+    <div className="p-6 bg-gray-900 text-white min-h-screen">
+      <h1
+        className="text-8xl text-center font-bold text-purple-600 mb-4 w-full"
+      >
+        Brain Box
+      </h1>
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <div className="flex flex-col md:flex-row md:space-x-4 mb-6">
+          <SubjectNav studentList={[student]} /> {/* Pass the student as an array */}
+          <ChapterList studentList={[student]} /> {/* Pass the student as an array */}
+        </div>
+      )}
     </div>
   );
 };

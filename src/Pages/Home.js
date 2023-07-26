@@ -4,11 +4,10 @@ import homeImage from "../assets/learningBro.png";
 
 const Home = () => {
   return (
-    <>
-      <h1 className="text-9xl text-center">Brain Box</h1>
+    <div className="p-6 bg-gray-900 text-white min-h-screen">
+      <h1 className="text-9xl text-center text-purple-600 mb-4">Brain Box</h1>
 
       <div className="flex flex-row items-center justify-center mt-4">
-
         <div className="flex items-center justify-center">
           <img src={homeImage} className="h-96 px-4" alt="Failed to load img" />
         </div>
@@ -35,7 +34,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

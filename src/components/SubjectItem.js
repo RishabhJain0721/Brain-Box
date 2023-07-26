@@ -1,21 +1,25 @@
 // SubjectItem.js
+
 import React, { useState } from "react";
 import AddSubjectModal from "./AddSubjectModal";
 
-const SubjectItem = ({ subjects }) => {
+const SubjectItem = ({ subjects, onAddSubject }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddSubjectClick = () => {
     setIsModalOpen(true);
   };
 
+  const handleAddSubject = (newSubject) => {
+    setIsModalOpen(false);
+    onAddSubject(newSubject);
+  };
+
   return (
     <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
       <h2 className="text-l mb-2 text-center">
         {subjects.map((subject, index) => (
-          <div key={index}>
-            {subject.name}
-          </div>
+          <div key={index}>{subject.name}</div>
         ))}
       </h2>
       <button
@@ -24,14 +28,13 @@ const SubjectItem = ({ subjects }) => {
       >
         Add Subject
       </button>
-      {/* Add the modal for adding new chapters or links */}
       <AddSubjectModal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
+        handleAddSubject={handleAddSubject}
       />
     </div>
   );
 };
 
 export default SubjectItem;
- 

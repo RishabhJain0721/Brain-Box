@@ -8,6 +8,8 @@ import Dashboard from './Pages/Dashboard';
 import { AuthContext } from "./Context/AuthContext";
 
 const App = () => {
+
+  //Check if the user is logged in or not
   const { currentUser } = useContext(AuthContext);
 
   const RequireAuth = ({ children }) => {

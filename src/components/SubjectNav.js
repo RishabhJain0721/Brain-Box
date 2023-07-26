@@ -1,22 +1,29 @@
-import React, { useContext } from "react";
+// SubjectNav.js
+
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
-import { getAuth,signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import SubjectItem from "./SubjectItem";
 
 const SubjectNav = ({ studentList }) => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-  const auth=getAuth();
+  const { currentUser, dispatch } = useContext(AuthContext);
+  const [updatedSubjectsList, setUpdatedSubjectsList] = useState(studentList[0].subjects); 
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      // Redirect to the login page after successful logout
+      await signOut(currentUser.auth);
+      dispatch({ type: "LOGOUT" });
       navigate("/login");
     } catch (error) {
       console.error("Error while logging out:", error);
     }
+  };
+
+  const handleAddSubject = (newSubject) => {
+    const updatedList = [...updatedSubjectsList, {name: newSubject, chapters: []}]
+    setUpdatedSubjectsList(updatedList);
   };
 
   return (
@@ -25,7 +32,13 @@ const SubjectNav = ({ studentList }) => {
         <h2 className="text-xl font-bold mb-2 text-center">Subjects</h2>
         <ul>
           {studentList.map((student, index) => {
-            return <SubjectItem key={index} subjects={student.subjects} />;
+            return (
+              <SubjectItem
+                key={index}
+                subjects={updatedSubjectsList}
+                onAddSubject={handleAddSubject}
+              />
+            );
           })}
         </ul>
         <div className="flex flex-col items-center mt-6">

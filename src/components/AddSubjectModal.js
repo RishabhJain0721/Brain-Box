@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Modal from "react-modal";
 import { AuthContext } from "../Context/AuthContext";
-import { updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
 
 Modal.setAppElement("#root"); // Set the root element as app element for accessibility
@@ -23,27 +23,30 @@ const customStyles = {
     padding: "20px",
     border: "none",
     borderRadius: "8px",
-    backgroundColor: "#2D3748", // Match the dashboard background color
+    backgroundColor: "#2D3748", 
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
   },
 };
 
-const AddSubjectModal = ({ isOpen, onRequestClose }) => {
-  const { user } = useContext(AuthContext);
+const AddSubjectModal = ({ isOpen, onRequestClose, handleAddSubject }) => {
+  const { currentUser } = useContext(AuthContext);
   const [subjectName, setSubjectName] = useState("");
 
-  const handleAddSubject = async () => {
+  const handleAdd = async () => {
     // Get the logged-in user's document ID
-    console.log(user)
-    const userId = user.uid;
+    const userId = currentUser.uid;
 
+    const docRef = doc(db, "students", userId);
     // Update the 'subjects' array in the user's document with the new subject
-    await updateDoc(db, `students/${userId}`, {
+    await updateDoc(docRef, {
       subjects: arrayUnion({ name: subjectName, chapters: [] }),
     });
 
     // Clear the input field
     setSubjectName("");
+
+    // Call the function passed from SubjectItem to handle adding the new subject
+    handleAddSubject(subjectName);
 
     // Close the modal
     onRequestClose();
@@ -72,7 +75,7 @@ const AddSubjectModal = ({ isOpen, onRequestClose }) => {
       <div className="flex justify-center">
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={handleAddSubject}
+          onClick={handleAdd}
         >
           Add Subject
         </button>

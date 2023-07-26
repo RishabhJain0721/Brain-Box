@@ -21,14 +21,10 @@ const Dashboard = () => {
     console.log("user in dashboard",userUid)
     if (userUid) {
       // Fetch the user's document based on their uid
-      // const a="xT3TsJHhXj6ksUYP6www";
-      // const b= "1"
       async function fetchStudent() {
         const studentDocRef = doc(db, "students", userUid);
-        console.log("11111111111111111",studentDocRef)
         try {
           const studentDocSnap = await getDoc(studentDocRef);
-          console.log("2222222222",studentDocSnap )
           if (studentDocSnap.exists()) {
             setStudent(studentDocSnap.data());
           } else {

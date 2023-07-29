@@ -1,11 +1,12 @@
 import React,{ useContext } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import { AuthContext } from "./Context/AuthContext";
+
 import Home from './Pages/Home';
 import SignUp from './Pages/SignUp';
 import LogIn from './Pages/LogIn';
 import Dashboard from './Pages/Dashboard';
-
-import { AuthContext } from "./Context/AuthContext";
 
 const App = () => {
 
@@ -16,7 +17,7 @@ const App = () => {
     return currentUser ? children : <Navigate to="/login" />;
   };
 
-  console.log("Current User",currentUser)
+  console.log("Current User details : ",currentUser)
 
   return (
     <BrowserRouter>

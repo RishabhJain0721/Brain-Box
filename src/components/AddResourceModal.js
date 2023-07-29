@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "react-modal";
+import { AuthContext } from "../Context/AuthContext";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const customStyles = {
   content: {
@@ -8,30 +11,93 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "#1f2937", // Background color
-    color: "white", // Text color
+    backgroundColor: "#1f2937", 
+    color: "white",
     border: "none",
     borderRadius: "8px",
     width: "320px",
     padding: "24px",
   },
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.75)", // Background color of overlay
+    backgroundColor: "rgba(0, 0, 0, 0.75)", 
   },
   input: {
-    // Text color for input fields
     color: "black",
   }, 
 };
 
-const AddResourceModal = ({ isOpen, onRequestClose, type, onSubmit }) => {
+const AddResourceModal = ({ isOpen, onRequestClose, type, onSubmit, currSubject, currChapter }) => {
+  const { currentUser } = useContext(AuthContext);
   const [resourceLink, setResourceLink] = useState("");
-
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
+    console.log("Current chapter:", currChapter);
     e.preventDefault();
-    onSubmit(resourceLink);
-    setResourceLink("");
-    onRequestClose();
+
+    // Get the logged-in user's document ID
+    const userId = currentUser.uid;
+    const docRef = doc(db, "students", userId);
+
+    // Get the student document data
+    const studentDocSnap = await getDoc(docRef);
+    const studentData = studentDocSnap.data();
+
+    // Find the subject to update
+    const subjectToUpdate = studentData.subjects.find(
+      (subject) => subject.name === currSubject.name
+    );
+
+    if (subjectToUpdate) {
+      // Find the chapter to update
+      const chapterToUpdate = subjectToUpdate.chapters.find(
+        (chapter) => chapter.name === currChapter.name
+      );
+
+      if (chapterToUpdate) {
+        // If the chapter exists, create a new resource link
+        const newResource = resourceLink.trim();
+
+        // Update the chapter's notes or vid array based on the resource type
+        if (type === "notes") {
+          const updatedChapter = {
+            ...chapterToUpdate,
+            notes: [...chapterToUpdate.notes, newResource],
+          };
+
+          // Find the index of the chapter in the chapters array
+          const chapterIndex = subjectToUpdate.chapters.findIndex(
+            (chapter) => chapter.name === currChapter.name
+          );
+
+          // Update the chapters array with the modified chapter
+          subjectToUpdate.chapters[chapterIndex] = updatedChapter;
+        } else if (type === "video") {
+          const updatedChapter = {
+            ...chapterToUpdate,
+            vid: [...chapterToUpdate.vid, newResource],
+          };
+
+          // Find the index of the chapter in the chapters array
+          const chapterIndex = subjectToUpdate.chapters.findIndex(
+            (chapter) => chapter.name === currChapter.name
+          );
+
+          // Update the chapters array with the modified chapter
+          subjectToUpdate.chapters[chapterIndex] = updatedChapter;
+        }
+      }
+    }
+
+    // Update the 'subjects' array in the user's document with the modified data
+    await updateDoc(docRef, {
+      subjects: studentData.subjects,
+    });
+
+    if (resourceLink.trim() !== "") {
+      onSubmit(resourceLink);
+      setResourceLink("");
+      onRequestClose();
+    }
   };
 
   return (

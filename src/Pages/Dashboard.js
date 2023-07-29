@@ -1,11 +1,11 @@
 import React, { useState, useEffect,useContext } from "react";
-import { db, auth } from "../firebase";
-import { collection, doc, getDoc } from "firebase/firestore";
-import SubjectNav from "../components/SubjectNav";
-import ChapterList from "../components/ChapterList";
- 
+
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../Context/AuthContext";
 
+import SubjectNav from "../components/SubjectNav";
+import ChapterList from "../components/ChapterList";
 
 const Dashboard = () => {
   const [student, setStudent] = useState(null);
@@ -18,7 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     // Get the current user's uid from Firebase Authentication
     const userUid = currentUser.uid;
-    console.log("user in dashboard",userUid)
+
     if (userUid) {
       // Fetch the user's document based on their uid
       async function fetchStudent() {
@@ -57,8 +57,8 @@ const Dashboard = () => {
         <p>{error}</p>
       ) : (
         <div className="flex flex-col md:flex-row md:space-x-4 mb-6">
-          <SubjectNav studentList={[student]} /> {/* Pass the student as an array */}
-          <ChapterList studentList={[student]} /> {/* Pass the student as an array */}
+          <SubjectNav student={student} /> {/* Pass the student as an object */}
+          <ChapterList student={student} /> {/* Pass the student as an object */}
         </div>
       )}
     </div>

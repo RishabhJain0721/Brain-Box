@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Modal from "react-modal";
 import { AuthContext } from "../Context/AuthContext";
+import { NewSubjectContext } from "../Context/NewSubjectContext";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -20,16 +21,18 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     maxWidth: "400px",
     width: "100%",
+    height: "fit-content",
     padding: "20px",
     border: "none",
     borderRadius: "8px",
-    backgroundColor: "#2D3748", 
+    backgroundColor: "#2D3748",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
   },
 };
 
-const AddSubjectModal = ({ isOpen, onRequestClose, handleAddSubject }) => {
+const AddSubjectModal = ({ isOpen, onRequestClose }) => {
   const { currentUser } = useContext(AuthContext);
+  const { dispatch2 } = useContext(NewSubjectContext);
   const [subjectName, setSubjectName] = useState("");
 
   const handleAdd = async () => {
@@ -46,7 +49,10 @@ const AddSubjectModal = ({ isOpen, onRequestClose, handleAddSubject }) => {
     setSubjectName("");
 
     // Call the function passed from SubjectItem to handle adding the new subject
-    handleAddSubject(subjectName);
+    dispatch2({
+      type: "SET_NEW_SUBJECT",
+      payload: { name: subjectName, chapters: [] },
+    });
 
     // Close the modal
     onRequestClose();
@@ -67,7 +73,7 @@ const AddSubjectModal = ({ isOpen, onRequestClose, handleAddSubject }) => {
         <input
           type="text"
           id="subjectName"
-          className="w-full border border-gray-300 rounded px-3 py-2"
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
           value={subjectName}
           onChange={(e) => setSubjectName(e.target.value)}
         />

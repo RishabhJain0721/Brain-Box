@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -19,7 +20,6 @@ const SignUp = () => {
     e.preventDefault();
 
     if (values.name === "" || values.email === "" || values.password === "") {
-      setErrorMsg("Please fill all the fields");
       return;
     }
     setErrorMsg("");
@@ -32,12 +32,10 @@ const SignUp = () => {
       );
 
       const user = userCredential.user;
-      console.log("Credentials", user.uid);
       await updateProfile(user, {
         displayName: values.name,
       });
-
-      // This will be used in sign up page to add a new student on firebase
+      console.log("New user created with credentials : ", user);
 
       const studentData = {
         name: values.name,
@@ -50,12 +48,12 @@ const SignUp = () => {
 
       await setDoc(docRef, studentData);
       console.log("Document written with ID: ", user.uid);
+
+      navigate("/dashboard");
     } catch (e) {
-      console.error("Error adding document: ", errorMsg);
+      console.error("Error adding document: ", e);
       setErrorMsg("Error creating user");
     }
-
-    navigate("/dashboard");
   };
 
   return (
@@ -122,6 +120,7 @@ const SignUp = () => {
                 Login
               </span>
             </div>
+            {errorMsg && <p className="text-red-500 mt-2 mb-2 text-sm flex justify-center">{errorMsg}</p>}
             <button
               type="submit"
               className="w-full bg-blue-500 text-white rounded py-2 hover:bg-blue-600"

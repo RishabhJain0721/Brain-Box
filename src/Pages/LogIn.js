@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { AuthContext } from "../Context/AuthContext";
@@ -19,7 +20,6 @@ const LogIn = () => {
     e.preventDefault();
 
     if (values.email === "" || values.password === "") {
-      setErrorMsg("Please fill all the fields");
       return;
     }
 
@@ -28,15 +28,13 @@ const LogIn = () => {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        console.log(user.uid);
+        console.log("User logged in with credentials : ",user);
         dispatch({ type: "LOGIN", payload: user });
         navigate("/dashboard");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        setErrorMsg(error.message);
-        console.log(errorMsg);
-        console.log(errorCode);
+      .catch((e) => {
+        console.error("Error logging in : ",e)
+        setErrorMsg("Error logging in");
       });
   };
 
@@ -88,6 +86,8 @@ const LogIn = () => {
                 Sign Up
               </span>
             </div>
+            {errorMsg && <p className="text-red-500 mt-2 mb-2 text-sm flex justify-center">{errorMsg}</p>}
+
             <button
               type="submit"
               className="w-full bg-blue-500 text-white rounded py-2 hover:bg-blue-600"

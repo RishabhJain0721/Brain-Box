@@ -3,16 +3,11 @@
 import React, { useState } from "react";
 import AddSubjectModal from "./AddSubjectModal";
 
-const SubjectItem = ({ subjects, onAddSubject }) => {
+const SubjectItem = ({ subjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddSubjectClick = () => {
     setIsModalOpen(true);
-  };
-
-  const handleAddSubject = (newSubject) => {
-    setIsModalOpen(false);
-    onAddSubject(newSubject);
   };
 
   return (
@@ -31,7 +26,6 @@ const SubjectItem = ({ subjects, onAddSubject }) => {
       <AddSubjectModal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
-        handleAddSubject={handleAddSubject}
       />
     </div>
   );

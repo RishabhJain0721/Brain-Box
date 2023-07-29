@@ -1,20 +1,70 @@
 import React, { useState } from "react";
 import AddResourceModal from "./AddResourceModal";
+import AddChapterModal from "./AddChapterModal";
 
 const ChapterItem = ({ subject }) => {
   const [chapters, setChapters] = useState(subject.chapters);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isAddChapterModalOpen, setIsAddChapterModalOpen] = useState(false);
+  const [selectedChapter, setSelectedChapter] = useState(null); // Add this state
+  // const [newNotes, setNewNotes] = useState([]);
+  // const [newVids, setNewVids] = useState([]);
 
-  const handleAddResource = (type, resourceLink) => {
-    const updatedChapters = { ...chapters };
-    const newResource = { link: resourceLink }; // Assuming it's just a link for simplicity
-    if (type === "notes") {
-      updatedChapters.notes.push(newResource);
-    } else if (type === "video") {
-      updatedChapters.vid.push(newResource);
+  const handleAddChapter = (chapterName) => {
+    if (chapterName.trim() === "") {
+      return;
     }
+    const updatedChapters = { ...chapters };
+    const newChapterKey = `chapter-${Date.now()}`;
+    updatedChapters[newChapterKey] = {
+      name: chapterName,
+      notes: [],
+      vid: [],
+    };
     setChapters(updatedChapters);
+    setIsAddChapterModalOpen(false);
+  };
+
+  const handleAddResource = (type, resourceLink, chapter) => {
+    console.log("Type : ",type);
+    console.log("Resource link : ", resourceLink);
+    console.log("Chapter : ", chapter);
+    if (type === "notes") {
+      //search for the chapter in the chapters array
+      const chapterToUpdate = Object.keys(chapters).find(
+        (chapterKey) => chapters[chapterKey] === chapter
+      );
+      //update the chapter's notes array
+      const updatedChapter = {
+        ...chapter,
+        notes: [...chapter.notes, resourceLink],
+      };
+      //update the chapters array with the modified chapter
+      const updatedChapters = { ...chapters };
+      updatedChapters[chapterToUpdate] = updatedChapter;
+      setChapters(updatedChapters);
+      // setNewNotes((prevNotes) => [...prevNotes, resourceLink]);
+
+    } else if (type === "video") {
+      //search for the chapter in the chapters array
+      const chapterToUpdate = Object.keys(chapters).find(
+        (chapterKey) => chapters[chapterKey] === chapter
+      );
+      //update the chapter's video array
+      const updatedChapter = {
+        ...chapter,
+        vid: [...chapter.vid, resourceLink],
+      };
+      //update the chapters array with the modified chapter
+      const updatedChapters = { ...chapters };
+      updatedChapters[chapterToUpdate] = updatedChapter;
+      setChapters(updatedChapters);
+
+      // setNewVids((prevVids) => [...prevVids, resourceLink]);
+    }
+    setIsNotesModalOpen(false);
+    setIsVideoModalOpen(false);
   };
 
   return (
@@ -33,25 +83,40 @@ const ChapterItem = ({ subject }) => {
             <div>
               <h4 className="font-semibold">Notes:</h4>
               <ul className="list-disc list-inside">
-                {chapter.notes.map((noteLink, noteIndex) => (
+                {chapter.notes.map((note, noteIndex) => (
                   <li key={noteIndex}>
-                    <a href={noteLink.link} className="text-blue-600 hover:underline">
-                      {noteLink.link}
+                    <a
+                      href={note}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {note}
                     </a>
                   </li>
                 ))}
               </ul>
               <button
                 className="bg-purple-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
-                onClick={() => setIsNotesModalOpen(true)}
+                onClick={() => {
+                  setIsNotesModalOpen(true);
+                  setSelectedChapter(chapter); // Set the selected chapter
+                }}
               >
                 Add Notes
               </button>
               <AddResourceModal
                 isOpen={isNotesModalOpen}
-                onRequestClose={() => setIsNotesModalOpen(false)}
+                onRequestClose={() => {
+                  setIsNotesModalOpen(false);
+                  setSelectedChapter(null); // Reset the selected chapter
+                }}
                 type="notes"
-                onSubmit={(resourceLink) => handleAddResource("notes", resourceLink)}
+                onSubmit={(resourceLink) =>
+                  handleAddResource("notes", resourceLink, selectedChapter) // Use the selected chapter here
+                }
+                currSubject={subject}
+                currChapter={selectedChapter}
               />
             </div>
             <div>
@@ -59,28 +124,57 @@ const ChapterItem = ({ subject }) => {
               <ul className="list-disc list-inside">
                 {chapter.vid.map((videoLink, videoIndex) => (
                   <li key={videoIndex}>
-                    <a href={videoLink.link} className="text-blue-600 hover:underline">
-                      {videoLink.link}
+                    <a
+                      href={videoLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {videoLink}
                     </a>
                   </li>
                 ))}
               </ul>
               <button
                 className="bg-purple-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
-                onClick={() => setIsVideoModalOpen(true)}
+                onClick={() => {
+                  setIsVideoModalOpen(true);
+                  setSelectedChapter(chapter); // Set the selected chapter
+                }}
               >
                 Add Video
               </button>
               <AddResourceModal
                 isOpen={isVideoModalOpen}
-                onRequestClose={() => setIsVideoModalOpen(false)}
+                onRequestClose={() => {
+                  setIsVideoModalOpen(false);
+                  setSelectedChapter(null); // Reset the selected chapter
+                }}
                 type="video"
-                onSubmit={(resourceLink) => handleAddResource("video", resourceLink)}
+                onSubmit={(resourceLink) =>
+                  handleAddResource("video", resourceLink, selectedChapter) // Use the selected chapter here
+                }
+                currSubject={subject}
+                currChapter={selectedChapter}
               />
             </div>
           </div>
         );
       })}
+
+      <button
+        className="bg-purple-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
+        onClick={() => setIsAddChapterModalOpen(true)}
+      >
+        Add Chapter
+      </button>
+      <AddChapterModal
+        isOpen={isAddChapterModalOpen}
+        onRequestClose={() => setIsAddChapterModalOpen(false)}
+        type="chapter"
+        onSubmit={handleAddChapter}
+        currSubject={subject}
+      />
     </div>
   );
 };

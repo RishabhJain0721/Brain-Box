@@ -1,18 +1,29 @@
 // ChapterList.js
-import React from "react";
-import ChapterItem from "./ChapterItem";
 
-const ChapterList = ({ studentList }) => {
+import React,{ useContext,useEffect,useState } from "react";
+import ChapterItem from "./ChapterItem";
+import { NewSubjectContext } from "../Context/NewSubjectContext";
+
+const ChapterList = ({ student }) => {
+  const { newSubject } = useContext(NewSubjectContext);
+  const [updatedSubjectsList, setUpdatedSubjectsList] = useState(
+    student.subjects
+  );
+  useEffect(() => {
+    if (newSubject) {
+      console.log("New subject added:", newSubject);
+      setUpdatedSubjectsList((prevSubjects) => [...prevSubjects, newSubject]);
+    }
+  }, [newSubject]);
+
   return (
     <div>
-      {studentList.map((student, index) => (
-        <div key={index} className="md:w-6/7">
-          {Object.keys(student.subjects).map((subjectKey) => {
-            const subject = student.subjects[subjectKey];
-            return <ChapterItem key={subjectKey} subject={subject} />;
-          })}
-        </div>
-      ))}
+      <div className="md:w-6/7">
+        {Object.keys(updatedSubjectsList).map((subjectKey) => {
+          const subject = updatedSubjectsList[subjectKey];
+          return <ChapterItem key={subjectKey} subject={subject} />;
+        })}
+      </div>
     </div>
   );
 };

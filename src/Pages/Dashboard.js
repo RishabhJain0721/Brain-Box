@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -13,7 +13,6 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   const { currentUser } = useContext(AuthContext);
-
 
   useEffect(() => {
     // Get the current user's uid from Firebase Authentication
@@ -45,9 +44,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1
-        className="text-8xl text-center font-bold text-purple-600 mb-4 w-full"
-      >
+      <h1 className="text-8xl text-center font-bold text-purple-600 mb-4 w-full">
         Brain Box
       </h1>
 
@@ -57,8 +54,11 @@ const Dashboard = () => {
         <p>{error}</p>
       ) : (
         <div className="flex flex-col md:flex-row md:space-x-4 mb-6">
-          <SubjectNav student={student} /> {/* Pass the student as an object */}
-          <ChapterList student={student} /> {/* Pass the student as an object */}
+          <SubjectNav student={student} />
+
+          <div className="flex-grow">
+            <ChapterList student={student} />
+          </div>
         </div>
       )}
     </div>

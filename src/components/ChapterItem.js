@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AddResourceModal from "./AddResourceModal";
 import AddChapterModal from "./AddChapterModal";
+import { AuthContext } from "../Context/AuthContext";
+import { db } from "../firebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 const ChapterItem = ({ subject }) => {
+  const { currentUser } = useContext(AuthContext);
   const [chapters, setChapters] = useState(subject.chapters);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isAddChapterModalOpen, setIsAddChapterModalOpen] = useState(false);
   const [selectedChapter, setSelectedChapter] = useState(null); // Add this state
-  // const [newNotes, setNewNotes] = useState([]);
-  // const [newVids, setNewVids] = useState([]);
 
   const handleAddChapter = (chapterName) => {
     if (chapterName.trim() === "") {
@@ -27,49 +35,148 @@ const ChapterItem = ({ subject }) => {
   };
 
   const handleAddResource = (type, resourceLink, chapter) => {
-    console.log("Type : ",type);
+    console.log("Type : ", type);
     console.log("Resource link : ", resourceLink);
     console.log("Chapter : ", chapter);
+
+    //search for the chapter in the chapters array
+    const chapterToUpdate = Object.keys(chapters).find(
+      (chapterKey) => chapters[chapterKey] === chapter
+    );
+    let updatedChapter;
     if (type === "notes") {
-      //search for the chapter in the chapters array
-      const chapterToUpdate = Object.keys(chapters).find(
-        (chapterKey) => chapters[chapterKey] === chapter
-      );
       //update the chapter's notes array
-      const updatedChapter = {
+      updatedChapter = {
         ...chapter,
         notes: [...chapter.notes, resourceLink],
       };
-      //update the chapters array with the modified chapter
-      const updatedChapters = { ...chapters };
-      updatedChapters[chapterToUpdate] = updatedChapter;
-      setChapters(updatedChapters);
-      // setNewNotes((prevNotes) => [...prevNotes, resourceLink]);
-
     } else if (type === "video") {
-      //search for the chapter in the chapters array
-      const chapterToUpdate = Object.keys(chapters).find(
-        (chapterKey) => chapters[chapterKey] === chapter
-      );
       //update the chapter's video array
-      const updatedChapter = {
+      updatedChapter = {
         ...chapter,
         vid: [...chapter.vid, resourceLink],
       };
-      //update the chapters array with the modified chapter
-      const updatedChapters = { ...chapters };
-      updatedChapters[chapterToUpdate] = updatedChapter;
-      setChapters(updatedChapters);
-
-      // setNewVids((prevVids) => [...prevVids, resourceLink]);
     }
+    //update the chapters array with the modified chapter
+    const updatedChapters = { ...chapters };
+    updatedChapters[chapterToUpdate] = updatedChapter;
+    setChapters(updatedChapters);
+
     setIsNotesModalOpen(false);
     setIsVideoModalOpen(false);
   };
 
+  const handleDeleteResource = async (
+    type,
+    chapter,
+    resourceIndex,
+    currSubject
+  ) => {
+    //search for the chapter in the chapters array
+    const chapterToUpdate = Object.keys(chapters).find(
+      (chapterKey) => chapters[chapterKey] === chapter
+    );
+    let updatedChapter;
+    if (type === "notes") {
+      //update the chapter's notes array
+      updatedChapter = {
+        ...chapter,
+        notes: chapter.notes.filter((note, index) => index !== resourceIndex),
+      };
+    } else if (type === "video") {
+      //update the chapter's video array
+      updatedChapter = {
+        ...chapter,
+        vid: chapter.vid.filter((vid, index) => index !== resourceIndex),
+      };
+    }
+
+    //update the chapters array with the modified chapter
+    const updatedChapters = { ...chapters };
+    updatedChapters[chapterToUpdate] = updatedChapter;
+    setChapters(updatedChapters);
+
+
+    const userId = currentUser.uid;
+    const docRef = doc(db, "students", userId);
+    try {
+      // Get the student document data
+      const studentDocSnap = await getDoc(docRef);
+      const studentData = studentDocSnap.data();
+  
+      // Find the subject to update
+      const subjectToUpdate = studentData.subjects.find(
+        (subject) => subject.name === currSubject
+      );
+  
+      if (subjectToUpdate) {
+        // Update the chapters array with the modified chapter
+        const updatedSubjects = [...studentData.subjects];
+        const subjectIndexToUpdate = updatedSubjects.findIndex(
+          (subject) => subject.name === currSubject
+        );
+  
+        if (subjectIndexToUpdate !== -1) {
+          updatedSubjects[subjectIndexToUpdate].chapters = updatedChapters;
+        }
+  
+        // Update the student document with the new subjects array
+        await updateDoc(docRef, { subjects: updatedSubjects });
+        console.log("Resource deleted successfully from Firestore.");
+      } else {
+        console.log("Subject not found in Firestore.");
+      }
+    } catch (error) {
+      console.error("Error deleting resource from Firestore:", error);
+    }  };
+
+
+    const handleDeleteChapter = async (chapterKey) => {
+      try {
+        // Remove the chapter from the chapters state
+        const updatedChapters = { ...chapters };
+        delete updatedChapters[chapterKey];
+        setChapters(updatedChapters);
+  
+        // Get the logged-in user's document ID
+        const userId = currentUser.uid;
+        const docRef = doc(db, "students", userId);
+  
+        // Get the student document data
+        const studentDocSnap = await getDoc(docRef);
+        const studentData = studentDocSnap.data();
+  
+        // Find the subject to update
+        const subjectToUpdate = studentData.subjects.find(
+          (subject) => subject.name === subject.name
+        );
+  
+        if (subjectToUpdate) {
+          // Update the chapters array with the modified chapter list
+          const updatedSubjects = [...studentData.subjects];
+          const subjectIndexToUpdate = updatedSubjects.findIndex(
+            (subject) => subject.name === subject.name
+          );
+  
+          if (subjectIndexToUpdate !== -1) {
+            updatedSubjects[subjectIndexToUpdate].chapters = updatedChapters;
+          }
+  
+          // Update the student document with the new subjects array
+          await updateDoc(docRef, { subjects: updatedSubjects });
+          console.log("Chapter deleted successfully from Firestore.");
+        } else {
+          console.log("Subject not found in Firestore.");
+        }
+      } catch (error) {
+        console.error("Error deleting chapter from Firestore:", error);
+      }
+    };
+  
+
   return (
     <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
-      <h2 className="text-2xl font-bold mb-2 bg-purple-600 px-4 py-1 rounded-md">
+      <h2 className="text-4xl font-bold mb-4 bg-purple-600 px-4 py-1.5 rounded-md">
         {subject.name}
       </h2>
 
@@ -78,8 +185,15 @@ const ChapterItem = ({ subject }) => {
         return (
           <div key={chapterKey} className="pl-12 mt-2">
             <h3 className="font-bold bg-blue-600 text-white px-2 py-1 rounded-md mb-2">
-              {chapter.name}
+              {parseInt(chapterKey) + 1}
+              {". "+chapter.name}
             </h3>
+            <button
+              className="bg-red-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
+              onClick={() => handleDeleteChapter(chapterKey)}
+            >
+              Delete Chapter
+            </button>
             <div>
               <h4 className="font-semibold">Notes:</h4>
               <ul className="list-disc list-inside">
@@ -93,6 +207,19 @@ const ChapterItem = ({ subject }) => {
                     >
                       {note}
                     </a>
+                    <button
+                      className="ml-5 text-red-400 p-1 rounded-md text-xs"
+                      onClick={() =>
+                        handleDeleteResource(
+                          "notes",
+                          chapter,
+                          noteIndex,
+                          subject.name
+                        )
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -112,8 +239,14 @@ const ChapterItem = ({ subject }) => {
                   setSelectedChapter(null); // Reset the selected chapter
                 }}
                 type="notes"
-                onSubmit={(resourceLink) =>
-                  handleAddResource("notes", resourceLink, selectedChapter) // Use the selected chapter here
+                onSubmit={
+                  (resourceLink) =>
+                    handleAddResource(
+                      "notes",
+                      resourceLink,
+                      selectedChapter,
+                      subject.name
+                    ) // Use the selected chapter here
                 }
                 currSubject={subject}
                 currChapter={selectedChapter}
@@ -132,6 +265,19 @@ const ChapterItem = ({ subject }) => {
                     >
                       {videoLink}
                     </a>
+                    <button
+                      className="ml-5 text-red-400 p-1 rounded-md text-xs"
+                      onClick={() =>
+                        handleDeleteResource(
+                          "video",
+                          chapter,
+                          videoIndex,
+                          subject.name
+                        )
+                      }
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -151,8 +297,9 @@ const ChapterItem = ({ subject }) => {
                   setSelectedChapter(null); // Reset the selected chapter
                 }}
                 type="video"
-                onSubmit={(resourceLink) =>
-                  handleAddResource("video", resourceLink, selectedChapter) // Use the selected chapter here
+                onSubmit={
+                  (resourceLink) =>
+                    handleAddResource("video", resourceLink, selectedChapter) // Use the selected chapter here
                 }
                 currSubject={subject}
                 currChapter={selectedChapter}

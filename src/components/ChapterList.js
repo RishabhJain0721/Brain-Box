@@ -1,6 +1,6 @@
 // ChapterList.js
 
-import React,{ useContext,useEffect,useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ChapterItem from "./ChapterItem";
 import { NewSubjectContext } from "../Context/NewSubjectContext";
 
@@ -9,6 +9,7 @@ const ChapterList = ({ student }) => {
   const [updatedSubjectsList, setUpdatedSubjectsList] = useState(
     student.subjects
   );
+
   useEffect(() => {
     if (newSubject) {
       console.log("New subject added:", newSubject);
@@ -19,9 +20,14 @@ const ChapterList = ({ student }) => {
   return (
     <div>
       <div className="md:w-6/7">
+        {/* Add some margin-bottom to create line spacing */}
         {Object.keys(updatedSubjectsList).map((subjectKey) => {
           const subject = updatedSubjectsList[subjectKey];
-          return <ChapterItem key={subjectKey} subject={subject} />;
+          return (
+            <div key={subjectKey} className=" mb-10"> {/* Add margin here */}
+              <ChapterItem subject={subject} />
+            </div>
+          );
         })}
       </div>
     </div>

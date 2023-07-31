@@ -35,7 +35,7 @@ const SubjectNav = ({ student }) => {
       <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
         <h2 className="text-xl font-bold mb-2 text-center">Subjects</h2>
         <ul>
-          <SubjectItem subjects={updatedSubjectsList} />
+          <SubjectItem subjects={updatedSubjectsList} setUpdatedSubjectsList={setUpdatedSubjectsList} />
         </ul>
         <div className="flex flex-col items-center mt-6">
           <span className="font-semibold mb-1 mt-7">{student.name}</span>

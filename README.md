@@ -9,6 +9,29 @@ Brain-Box is a web application that allows students to organize and manage their
 - **Notes and Video Links**: Users can add and manage notes and video links for each chapter.
 - **Real-time Updates**: Any additions or deletions made to subjects, chapters, notes, or video links are instantly updated in the application.
 
+## Working video
+
+
+
+https://github.com/RishabhJain0721/Brain-Box/assets/107767172/18e357bd-7bd0-415c-95c4-976206e10e5a
+
+
+## Screenshots
+
+### Home Page
+![home](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/3fea689d-e25b-4939-baaa-cb32c8d3ab57)
+
+### Sign Up page
+![signup](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/83d3c407-b9f1-4367-8786-0a9ee221f8b6)
+
+### Login page
+![login](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/107eba9a-79d9-44d1-96d1-d49f52f405d7)
+
+### Dashboard Pages :
+![dashboard1](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/f2361272-865c-4ec1-a99e-58e1154df808)
+![addsubmodal](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/15a0626b-7a80-424a-95c2-a7b3cf3a8862)
+![dashboard2](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/0498a813-c07c-4257-bd6b-783974ec6c9e)
+
 ## Tech Stack
 
 - **Frontend**: React, React Router, Firebase Authentication, Tailwind CSS

@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Brain-Box
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Brain-Box is a web application that allows students to organize and manage their study materials, including subjects, chapters, notes, and video links.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Authentication**: Users can sign up and log in to the Brain-Box using their email and password.
+- **Subjects and Chapters**: Users can create, view, and organize subjects and their corresponding chapters.
+- **Notes and Video Links**: Users can add and manage notes and video links for each chapter.
+- **Real-time Updates**: Any additions or deletions made to subjects, chapters, notes, or video links are instantly updated in the application.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React, React Router, Firebase Authentication, Tailwind CSS
+- **Backend**: Firebase Cloud Firestore
+- **Deployment**: Vercel
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+1. Clone the repository:  ```git clone https://github.com/RishabhJain0721/Brain-Box.git```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies:
+   - cd Brain-Box
+   - npm install
 
-### `npm run build`
+3. Set up Firebase:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   - Create a new Firebase project at [https://console.firebase.google.com/](https://console.firebase.google.com/).
+   - Enable Email/Password sign-in in Firebase Authentication.
+   - Create a Firestore database and set up the required collections and documents as per the project structure.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Configure Firebase in the application:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   - In the `src/firebase.js` file, replace the Firebase configuration with your own configuration from the Firebase Console.
 
-### `npm run eject`
+5. Start the development server: ```npm start```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application will be accessible at [http://localhost:3000](http://localhost:3000).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Contributing
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+If you find any bugs or want to contribute to this project, feel free to open an issue or submit a pull request.
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project is licensed under the [MIT License](LICENSE).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Acknowledgements
 
-### Code Splitting
+- The application was built using [React](https://reactjs.org/) and [Firebase](https://firebase.google.com/).
+- The UI is styled using [Tailwind CSS](https://tailwindcss.com/).
+- Thanks to [OpenAI](https://openai.com/) for providing the GPT-3.5 language model, which was of great help during this project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contact
 
-### Analyzing the Bundle Size
+For any inquiries, you can reach us at [rishujain0721@gmail.com](rishujain0721@gmail.com).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

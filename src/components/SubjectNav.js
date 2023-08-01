@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import { NewSubjectContext } from "../Context/NewSubjectContext";
-import { signOut } from "firebase/auth";
+import { getAuth,signOut } from "firebase/auth";
 import SubjectItem from "./SubjectItem";
 
 const SubjectNav = ({ student }) => {
@@ -15,7 +15,9 @@ const SubjectNav = ({ student }) => {
 
   const handleLogout = async () => {
     try {
-      await signOut(currentUser.auth);
+      // console.log(currentUser.auth)
+      const auth = getAuth();
+      await signOut(auth);
       dispatch({ type: "LOGOUT" });
       navigate("/login");
     } catch (error) {

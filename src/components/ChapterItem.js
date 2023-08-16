@@ -185,8 +185,8 @@ const ChapterItem = ({ subject }) => {
         return (
           <div key={chapterKey} className="pl-12 mt-2">
             <h3 className="font-bold bg-blue-600 text-white px-2 py-1 rounded-md mb-2">
-              {parseInt(chapterKey) + 1}
-              {". "+chapter.name}
+              { isNaN(parseInt(chapterKey)+1) ? "" : (parseInt(chapterKey)+1)+". "}
+              {chapter.name}
             </h3>
             <button
               className="bg-red-600 text-white px-2 py-1 rounded-md mt-2 text-xs"

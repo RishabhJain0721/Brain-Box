@@ -36,7 +36,7 @@ const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => { // Added setSubj
       );
 
         console.log("Subject deleted successfully from Firebase.");
-        window.alert("Refresh the page to see the changes.")
+        window.location.reload();    
       } catch (error) {
         console.error("Error deleting subject from Firebase:", error);
       }
@@ -47,11 +47,11 @@ const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => { // Added setSubj
     <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
       <h2 className="text-l mb-2 text-center">
         {subjects.map((subject, index) => (
-          <div key={index} className="flex items-center justify-between">
+          <div key={index} className="flex items-center">
             <span>{subject.name}</span>
             {/* Button to delete the subject */}
             <button
-              className="text-red-500 hover:text-red-700"
+              className="text-red-500 hover:text-red-700 ml-3"
               onClick={() => handleDeleteSubject(subject.name)} // Call the handleDeleteSubject function when clicked
             >
               <FontAwesomeIcon icon={faTrashAlt} />

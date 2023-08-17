@@ -6,16 +6,9 @@ module.exports = {
   },
   plugins: [],
   screens: {
-    'sm': '576px',
-    // => @media (min-width: 576px) { ... }
-  
-    'md': '768px',
-    // => @media (min-width: 768px) { ... }
-  
-    'lg': '992px',
-    // => @media (min-width: 992px) { ... }
-  
-    'xl': '1200px',
-    // => @media (min-width: 1200px) { ... }
+    'sm': {'min': '576px', 'max': '767px'},
+    'md': {'min': '768px', 'max': '991px'},
+    'lg': {'min': '992px', 'max': '1199px'},
+    'xl': {'min': '1200px'},
   },
 }

@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCyyljm9MDWTuiUtdsz7xnikPly7F1tC0w",
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: "testing-720eb.firebaseapp.com",
   databaseURL: "https://testing-720eb-default-rtdb.firebaseio.com",
   projectId: "testing-720eb",

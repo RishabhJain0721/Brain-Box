@@ -4,6 +4,9 @@ import { AuthContext } from "../Context/AuthContext";
 import { NewSubjectContext } from "../Context/NewSubjectContext";
 import { getAuth,signOut } from "firebase/auth";
 import SubjectItem from "./SubjectItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const SubjectNav = ({ student }) => {
   const navigate = useNavigate();
@@ -12,6 +15,15 @@ const SubjectNav = ({ student }) => {
   const [updatedSubjectsList, setUpdatedSubjectsList] = useState(
     student.subjects
   );
+
+  // const [isMobile, setIsMobile] = useState(false);
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
+  // useEffect(()=>{
+  //     var screenWidth = window.innerWidth;
+  //     screenWidth > 768 ? setIsMobile(false) : setIsMobile(true)
+  // }, [window])
+
 
   const handleLogout = async () => {
     try {
@@ -32,9 +44,14 @@ const SubjectNav = ({ student }) => {
     }
   }, [newSubject]);
 
+
   return (
-    <div className="md:w-4/7">
-      <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
+    <div className={`md:w-4/7 h-max max-sm:absolute max-sm:top-0 max-sm:h-screen max-sm:w-[90%] duration-300 ${isNavExpanded ? "left-0" : "-left-full"}`}>
+      <div className="bg-gray-800 text-white p-4 rounded-md mb-4 h-full">
+        <div className=" fixed top-4 left-4 text-2xl z-30 lg:hidden sm:block"
+          onClick={()=> setIsNavExpanded(!isNavExpanded)}>
+          <FontAwesomeIcon icon={isNavExpanded ? faArrowLeft : faBars} />
+        </div>
         <h2 className="text-xl font-bold mb-2 text-center">Subjects</h2>
         <ul>
           <SubjectItem subjects={updatedSubjectsList} setUpdatedSubjectsList={setUpdatedSubjectsList} />

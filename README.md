@@ -38,7 +38,7 @@ https://github.com/RishabhJain0721/Brain-Box/assets/107767172/18e357bd-7bd0-415c
 - **Backend**: Firebase Cloud Firestore
 - **Deployment**: Vercel
 
-## Getting Started
+## Local installation 
 
 1. Clone the repository:  ```git clone https://github.com/RishabhJain0721/Brain-Box.git```
 
@@ -50,30 +50,38 @@ https://github.com/RishabhJain0721/Brain-Box/assets/107767172/18e357bd-7bd0-415c
 
    - Create a new Firebase project at [https://console.firebase.google.com/](https://console.firebase.google.com/).
    - Enable Email/Password sign-in in Firebase Authentication.
-   - Create a Firestore database and set up the required collections and documents as per the project structure.
+   - Create a Firestore database.
 
 4. Configure Firebase in the application:
+   - Go to project settings
+     
+     ![1](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/c104f295-087e-4eb9-bdec-8ddf4e7d1ab2)
+   - Scroll down and copy the firebaseConfig object.
 
-   - In the `src/firebase.js` file, replace the Firebase configuration with your own configuration from the Firebase Console.
+     ![Screenshot 2023-12-28 001105](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/507706f1-b062-4b8d-ab26-2bc7102cf297)
+ 
+
+   - In the `src/firebase.js` file, replace the Firebase configuration with your own configuration from the Firebase Console and let the other imports export remain as shown in the image here :
+     ![firebasejs](https://github.com/RishabhJain0721/Brain-Box/assets/107767172/a6c30071-dfb8-4d9b-bece-715f224e741a)
+
+
+
+
 
 5. Start the development server: ```npm start```
 
 
 The application will be accessible at [http://localhost:3000](http://localhost:3000).
+You can check the new users and data collected on the application on your firebase console.
 
 ## Contributing
 
 If you find any bugs or want to contribute to this project, feel free to open an issue or submit a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Acknowledgements
 
 - The application was built using [React](https://reactjs.org/) and [Firebase](https://firebase.google.com/).
 - The UI is styled using [Tailwind CSS](https://tailwindcss.com/).
-- Thanks to [OpenAI](https://openai.com/) for providing the GPT-3.5 language model, which was of great help during this project.
 
 ## Contact
 

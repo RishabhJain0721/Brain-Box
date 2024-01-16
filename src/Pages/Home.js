@@ -8,7 +8,7 @@ const Home = () => {
     <div className="p-6 bg-gray-900 text-white min-h-screen">
       <h1 className="text-5xl md:text-9xl text-center text-purple-600 mb-4">Brain Box</h1>
 
-      <div className="flex flex-col md:flex-row items-center justify-center mt-4">
+      <div className="flex flex-col lg:flex-row items-center justify-center mt-4">
         <div className="flex items-center justify-center">
           <img src={homeImage} className="h-60 md:h-96 px-4" alt="Failed to load img" />
         </div>

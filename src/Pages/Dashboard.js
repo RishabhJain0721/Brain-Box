@@ -40,11 +40,11 @@ const Dashboard = () => {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [currentUser.uid]);
 
   return (
     <div className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-8xl text-center font-bold text-purple-600 mb-4 w-full">
+      <h1 className="text-8xl max-sm:text-4xl text-center font-bold text-purple-600 mb-4 w-full">
         Brain Box
       </h1>
 

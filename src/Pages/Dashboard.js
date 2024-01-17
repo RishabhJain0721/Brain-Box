@@ -4,8 +4,8 @@ import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../Context/AuthContext";
 
-import SubjectNav from "../Components/SubjectNav";
-import ChapterList from "../Components/ChapterList";
+import SubjectNav from "../components/SubjectNav";
+import ChapterList from "../components/ChapterList";
 
 const Dashboard = () => {
   const [student, setStudent] = useState(null);

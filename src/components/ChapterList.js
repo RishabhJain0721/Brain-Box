@@ -3,12 +3,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import ChapterItem from "./ChapterItem";
 import { NewSubjectContext } from "../Context/NewSubjectContext";
+import { SelectSubjectContext } from "../Context/SelectSubjectContext";
 
 const ChapterList = ({ student }) => {
   const { newSubject } = useContext(NewSubjectContext);
   const [updatedSubjectsList, setUpdatedSubjectsList] = useState(
-    student.subjects
+    Object.values(student.subjects)
   );
+  const { selectedSubject } = useContext(SelectSubjectContext);
+  const [filteredSubjectList, setFilteredSubjectList] = useState([]);
+
+  useEffect(() => {
+    const filteredSubjectList =
+      selectedSubject === ""
+        ? updatedSubjectsList
+        : updatedSubjectsList.filter(
+            (subject) => subject.name === selectedSubject
+          );
+    setFilteredSubjectList(() => filteredSubjectList);
+  }, [selectedSubject, updatedSubjectsList]);
 
   useEffect(() => {
     if (newSubject) {
@@ -21,10 +34,11 @@ const ChapterList = ({ student }) => {
     <div>
       <div className="md:w-6/7">
         {/* Add some margin-bottom to create line spacing */}
-        {Object.keys(updatedSubjectsList).map((subjectKey) => {
-          const subject = updatedSubjectsList[subjectKey];
+        {filteredSubjectList.map((subject, index) => {
           return (
-            <div key={subjectKey} className=" mb-10"> {/* Add margin here */}
+            <div key={index} className=" mb-10">
+              {" "}
+              {/* Add margin here */}
               <ChapterItem subject={subject} />
             </div>
           );

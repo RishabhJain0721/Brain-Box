@@ -50,7 +50,7 @@ export default function CheckList() {
           value={activity}
           onChange={(e) => setActivity(e.target.value)}
         />
-        <button className={style.button} onClick={addActivity}>
+        <button className={style.button} onClick={activity!==""?addActivity:null}>
           ➕
         </button>
       </div>

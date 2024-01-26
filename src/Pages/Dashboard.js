@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../Context/AuthContext";
 
-import SubjectNav from "../Components/SubjectNav";
+import SubjectNav from "../Components/ChapterItem"
 import ChapterList from "../Components/ChapterList";
 
 const Dashboard = () => {

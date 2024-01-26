@@ -10,7 +10,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const SubjectNav = ({ student }) => {
   const navigate = useNavigate();
-  // const { currentUser, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
   const { newSubject } = useContext(NewSubjectContext);
   const [updatedSubjectsList, setUpdatedSubjectsList] = useState(
     student.subjects
@@ -27,7 +27,6 @@ const SubjectNav = ({ student }) => {
 
   const handleLogout = async () => {
     try {
-      // console.log(currentUser.auth)
       const auth = getAuth();
       await signOut(auth);
       dispatch({ type: "LOGOUT" });

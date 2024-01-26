@@ -57,10 +57,10 @@ const SignUp = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-900 text-white flex justify-center items-center min-h-screen">
+    <div className="p-6 bg-[#0480AE] text-white flex justify-center items-center min-h-screen">
       <div className="flex justify-center items-center h-full">
-        <div className="w-80 bg-gray-800 p-6 rounded shadow">
-          <h1 className="text-2xl font-bold mb-6 text-center">Sign Up</h1>
+        <div className="w-[500px] h-[500px] bg-[#055B7A] p-6 rounded shadow">
+          <h1 className="text-5xl font-bold mb-6 text-center">Sign Up</h1>
           <form onSubmit={handleSignup}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-300 mb-2">
@@ -69,7 +69,7 @@ const SignUp = () => {
               <input
                 type="text"
                 id="name"
-                className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-0"
+                className="w-full bg-gray-500 text-white rounded px-3 py-2 focus:outline-0"
                 value={values.name}
                 onChange={(event) =>
                   setValues((prev) => ({ ...prev, name: event.target.value }))
@@ -84,7 +84,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
-                className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-0"
+                className="w-full bg-gray-500 text-white rounded px-3 py-2 focus:outline-0"
                 value={values.email}
                 onChange={(event) =>
                   setValues((prev) => ({ ...prev, email: event.target.value }))
@@ -99,7 +99,7 @@ const SignUp = () => {
               <input
                 type="password"
                 id="password"
-                className="w-full bg-gray-700 text-white rounded px-3 py-2 focus:outline-0"
+                className="w-full bg-gray-500 text-white rounded px-3 py-2 focus:outline-0"
                 value={values.password}
                 onChange={(event) =>
                   setValues((prev) => ({
@@ -110,7 +110,7 @@ const SignUp = () => {
                 required
               />
             </div>
-            <div className="flex justify-center items-center text-xs my-2">
+            <div className="flex justify-center items-center text-2xl my-2 mt-10 mb-6">
               <span className="text-gray-400">Already have an account?</span>
               &nbsp;&nbsp;
               <span

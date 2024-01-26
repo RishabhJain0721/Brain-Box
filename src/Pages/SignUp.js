@@ -69,6 +69,7 @@ const SignUp = () => {
               <input
                 type="text"
                 id="name"
+                placeholder="Enter your name"
                 className="w-full bg-gray-500 text-white rounded px-3 py-2 focus:outline-0"
                 value={values.name}
                 onChange={(event) =>
@@ -84,6 +85,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
+                placeholder="Enter your email"
                 className="w-full bg-gray-500 text-white rounded px-3 py-2 focus:outline-0"
                 value={values.email}
                 onChange={(event) =>
@@ -99,6 +101,7 @@ const SignUp = () => {
               <input
                 type="password"
                 id="password"
+                placeholder="***********"
                 className="w-full bg-gray-500 text-white rounded px-3 py-2 focus:outline-0"
                 value={values.password}
                 onChange={(event) =>

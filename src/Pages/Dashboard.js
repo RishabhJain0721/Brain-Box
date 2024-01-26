@@ -6,6 +6,8 @@ import { AuthContext } from "../Context/AuthContext";
 
 import SubjectNav from "../Components/SubjectNav";
 import ChapterList from "../Components/ChapterList";
+import CheckList from "../Components/CheckList";
+
 
 const Dashboard = () => {
   const [student, setStudent] = useState(null);
@@ -47,7 +49,7 @@ const Dashboard = () => {
       <h1 className="text-8xl max-sm:text-4xl text-center font-bold text-purple-600 mb-4 w-full">
         Brain Box
       </h1>
-
+      <CheckList student={student}/>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -61,6 +63,7 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+      
     </div>
   );
 };

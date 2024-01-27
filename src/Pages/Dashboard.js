@@ -6,7 +6,7 @@ import { AuthContext } from "../Context/AuthContext";
 
 import SubjectNav from "../Components/SubjectNav";
 import ChapterList from "../Components/ChapterList";
-import "./dashboard.css";
+
 const Dashboard = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);

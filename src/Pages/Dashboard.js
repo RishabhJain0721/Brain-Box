@@ -6,7 +6,7 @@ import { AuthContext } from "../Context/AuthContext";
 
 import SubjectNav from "../Components/SubjectNav";
 import ChapterList from "../Components/ChapterList";
-
+import "./dashboard.css";
 const Dashboard = () => {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,8 +43,8 @@ const Dashboard = () => {
   }, [currentUser.uid]);
 
   return (
-    <div className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-8xl max-sm:text-4xl text-center font-bold text-purple-600 mb-4 w-full">
+    <div className="p-6 bg-blue-400 text-black min-h-screen">
+      <h1 className="text-8xl max-sm:text-4xl text-center font-bold text-red-600 mb-4 w-full">
         Brain Box
       </h1>
 
@@ -53,7 +53,7 @@ const Dashboard = () => {
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <div className="flex flex-col md:flex-row md:space-x-4 mb-6">
+        <div className="flex-container">
           <SubjectNav student={student} />
 
           <div className="flex-grow">

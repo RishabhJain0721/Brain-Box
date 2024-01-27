@@ -5,6 +5,8 @@ import { AuthContext } from "../Context/AuthContext";
 import { db } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+// import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import {
   doc,
   getDoc,
@@ -175,8 +177,8 @@ const ChapterItem = ({ subject }) => {
   
 
   return (
-    <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
-      <h2 className="text-4xl font-bold mb-4 bg-purple-600 px-4 py-1.5 rounded-md">
+    <div className="bg-gray-400 text-white p-4 rounded-md mb-4">
+      <h2 className="text-4xl font-bold mb-4 bg-blue-400 px-4 py-1.5 rounded-md">
         {subject.name}
       </h2>
 
@@ -184,18 +186,18 @@ const ChapterItem = ({ subject }) => {
         const chapter = chapters[chapterKey];
         return (
           <div key={chapterKey} className="pl-12 mt-2">
-            <h3 className="font-bold bg-blue-600 text-white px-2 py-1 rounded-md mb-2">
+            <h3 className="font-bold bg-blue-500 text-white px-2 py-1 rounded-md mb-2">
               { isNaN(parseInt(chapterKey)+1) ? "" : (parseInt(chapterKey)+1)+". "}
               {chapter.name}
             </h3>
             <button
-              className="bg-red-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
+              className="bg-red-600 text-white px-3 py-2 rounded-md mt-2 text-s"
               onClick={() => handleDeleteChapter(chapterKey)}
             >
               Delete Chapter
             </button>
             <div>
-              <h4 className="font-semibold">Notes:</h4>
+              <h4 className="font-bold">Notes:</h4>
               <ul className="list-disc list-inside">
                 {chapter.notes.map((note, noteIndex) => (
                   <li key={noteIndex}>
@@ -224,7 +226,7 @@ const ChapterItem = ({ subject }) => {
                 ))}
               </ul>
               <button
-                className="bg-purple-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
+                className="bg-purple-600 text-white px-3 py-2 rounded-md mt-2 text-s"
                 onClick={() => {
                   setIsNotesModalOpen(true);
                   setSelectedChapter(chapter); // Set the selected chapter
@@ -266,7 +268,7 @@ const ChapterItem = ({ subject }) => {
                       {videoLink}
                     </a>
                     <button
-                      className="ml-5 text-red-400 p-1 rounded-md text-xs"
+                      className="ml-5 text-red-400 p-2 rounded-md text-s"
                       onClick={() =>
                         handleDeleteResource(
                           "video",
@@ -282,7 +284,7 @@ const ChapterItem = ({ subject }) => {
                 ))}
               </ul>
               <button
-                className="bg-purple-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
+                className="bg-purple-600 text-white px-3 py-2 rounded-md mt-2 text-s"
                 onClick={() => {
                   setIsVideoModalOpen(true);
                   setSelectedChapter(chapter); // Set the selected chapter
@@ -310,7 +312,7 @@ const ChapterItem = ({ subject }) => {
       })}
 
       <button
-        className="bg-purple-600 text-white px-2 py-1 rounded-md mt-2 text-xs"
+        className="bg-purple-600 text-white px-3 py-2 rounded-md mt-2 text-s"
         onClick={() => setIsAddChapterModalOpen(true)}
       >
         Add Chapter

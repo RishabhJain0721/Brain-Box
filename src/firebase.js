@@ -3,15 +3,14 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: "testing-720eb",
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID
+  apiKey: "AIzaSyALaYVdiu4sB-RX3PURIk1-WjxHtzf5S1w",
+  authDomain: "brain-box-899ec.firebaseapp.com",
+  projectId: "brain-box-899ec",
+  storageBucket: "brain-box-899ec.appspot.com",
+  messagingSenderId: "220074958290",
+  appId: "1:220074958290:web:1f19fdd5a8bc9448883c0b",
+  measurementId: "G-FMNLXMESW4"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);

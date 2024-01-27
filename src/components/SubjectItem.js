@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import AddSubjectModal from "./AddSubjectModal";
 import { AuthContext } from "../Context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +6,8 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
 import { doc, updateDoc, arrayRemove } from "firebase/firestore";
 
-const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => { // Added setSubjects prop
+const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => {
+  // Added setSubjects prop
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
@@ -17,7 +18,9 @@ const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => { // Added setSubj
   // Function to handle deletion of a subject
   const handleDeleteSubject = async (subjectName) => {
     // Find the subject to delete
-    const subjectToDelete = subjects.find((subject) => subject.name === subjectName);
+    const subjectToDelete = subjects.find(
+      (subject) => subject.name === subjectName
+    );
 
     if (subjectToDelete) {
       try {
@@ -32,11 +35,11 @@ const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => { // Added setSubj
 
         // Update the subjects list in the parent component
         setUpdatedSubjectsList((prevSubjects) =>
-        prevSubjects.filter((subject) => subject.name !== subjectName)
-      );
+          prevSubjects.filter((subject) => subject.name !== subjectName)
+        );
 
         console.log("Subject deleted successfully from Firebase.");
-        window.location.reload();    
+        window.location.reload();
       } catch (error) {
         console.error("Error deleting subject from Firebase:", error);
       }

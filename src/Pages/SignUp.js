@@ -49,7 +49,7 @@ const SignUp = () => {
       await setDoc(docRef, studentData);
       console.log("Document written with ID: ", user.uid);
 
-      navigate("/LogIn");
+      navigate("/login");
     } catch (e) {
       console.error("Error adding document: ", e);
       setErrorMsg("Error creating user");

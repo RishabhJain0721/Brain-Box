@@ -15,11 +15,9 @@ const Dashboard = () => {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    // Get the current user's uid from Firebase Authentication
     const userUid = currentUser.uid;
 
     if (userUid) {
-      // Fetch the user's document based on their uid
       async function fetchStudent() {
         const studentDocRef = doc(db, "students", userUid);
         try {

@@ -11,7 +11,7 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     transform: "translate(-50%, -50%)",
-    backgroundColor: "#1f2937", 
+    backgroundColor: "#1f2937",
     color: "white",
     border: "none",
     borderRadius: "8px",
@@ -19,17 +19,24 @@ const customStyles = {
     padding: "24px",
   },
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.75)", 
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
   },
   input: {
     color: "black",
-  }, 
+  },
 };
 
-const AddResourceModal = ({ isOpen, onRequestClose, type, onSubmit, currSubject, currChapter }) => {
+const AddResourceModal = ({
+  isOpen,
+  onRequestClose,
+  type,
+  onSubmit,
+  currSubject,
+  currChapter,
+}) => {
   const { currentUser } = useContext(AuthContext);
   const [resourceLink, setResourceLink] = useState("");
-  
+
   const handleSubmit = async (e) => {
     console.log("Current chapter:", currChapter);
     e.preventDefault();
@@ -48,42 +55,45 @@ const AddResourceModal = ({ isOpen, onRequestClose, type, onSubmit, currSubject,
     );
 
     if (subjectToUpdate) {
-      // Find the chapter to update
-      const chapterToUpdate = subjectToUpdate.chapters.find(
-        (chapter) => chapter.name === currChapter.name
-      );
+      // Ensure that 'chapters' is an array before attempting to find the chapter
+      if (Array.isArray(subjectToUpdate.chapters)) {
+        // Find the chapter to update
+        const chapterToUpdate = subjectToUpdate.chapters.find(
+          (chapter) => chapter.name === currChapter.name
+        );
 
-      if (chapterToUpdate) {
-        // If the chapter exists, create a new resource link
-        const newResource = resourceLink.trim();
+        if (chapterToUpdate) {
+          // If the chapter exists, create a new resource link
+          const newResource = resourceLink.trim();
 
-        // Update the chapter's notes or vid array based on the resource type
-        if (type === "notes") {
-          const updatedChapter = {
-            ...chapterToUpdate,
-            notes: [...chapterToUpdate.notes, newResource],
-          };
+          // Update the chapter's notes or vid array based on the resource type
+          if (type === "notes") {
+            const updatedChapter = {
+              ...chapterToUpdate,
+              notes: [...chapterToUpdate.notes, newResource],
+            };
 
-          // Find the index of the chapter in the chapters array
-          const chapterIndex = subjectToUpdate.chapters.findIndex(
-            (chapter) => chapter.name === currChapter.name
-          );
+            // Find the index of the chapter in the chapters array
+            const chapterIndex = subjectToUpdate.chapters.findIndex(
+              (chapter) => chapter.name === currChapter.name
+            );
 
-          // Update the chapters array with the modified chapter
-          subjectToUpdate.chapters[chapterIndex] = updatedChapter;
-        } else if (type === "video") {
-          const updatedChapter = {
-            ...chapterToUpdate,
-            vid: [...chapterToUpdate.vid, newResource],
-          };
+            // Update the chapters array with the modified chapter
+            subjectToUpdate.chapters[chapterIndex] = updatedChapter;
+          } else if (type === "video") {
+            const updatedChapter = {
+              ...chapterToUpdate,
+              vid: [...chapterToUpdate.vid, newResource],
+            };
 
-          // Find the index of the chapter in the chapters array
-          const chapterIndex = subjectToUpdate.chapters.findIndex(
-            (chapter) => chapter.name === currChapter.name
-          );
+            // Find the index of the chapter in the chapters array
+            const chapterIndex = subjectToUpdate.chapters.findIndex(
+              (chapter) => chapter.name === currChapter.name
+            );
 
-          // Update the chapters array with the modified chapter
-          subjectToUpdate.chapters[chapterIndex] = updatedChapter;
+            // Update the chapters array with the modified chapter
+            subjectToUpdate.chapters[chapterIndex] = updatedChapter;
+          }
         }
       }
     }

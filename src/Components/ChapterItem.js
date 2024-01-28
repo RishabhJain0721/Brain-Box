@@ -177,7 +177,7 @@ const ChapterItem = ({ subject }) => {
   
 
   return (
-    <div className="bg-gray-400 text-white p-4 rounded-md mb-4">
+    <div className="bg-gray-700 text-white p-4 rounded-md mb-4">
       <h2 className="text-4xl font-bold mb-4 bg-blue-400 px-4 py-1.5 rounded-md">
         {subject.name}
       </h2>

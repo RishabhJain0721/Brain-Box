@@ -47,7 +47,7 @@ const SubjectNav = ({ student }) => {
 
   return (
     <div className={`md:w-4/7 h-max max-sm:absolute max-sm:top-0 max-sm:h-screen max-sm:w-[90%] duration-300 ${isNavExpanded ? "left-0" : "-left-full"}`}>
-      <div className="bg-gray-400 text-white p-4 rounded-md mb-4 h-full">
+      <div className="bg-gray-700 text-white p-4 rounded-md mb-4 h-full">
         <div className=" fixed top-4 left-4 text-2xl z-30 lg:hidden sm:block"
           onClick={()=> setIsNavExpanded(!isNavExpanded)}>
           <FontAwesomeIcon icon={isNavExpanded ? faArrowLeft : faBars} />

@@ -40,7 +40,7 @@ const Dashboard = () => {
   }, [currentUser.uid]);
 
   return (
-    <div className="p-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white min-h-screen">
+    <div className="p-6 bg-gradient-to-r from-blue-300 to-purple-400 text-white min-h-screen">
       <h1 className="text-4xl md:text-8xl text-center font-bold mb-4">
         Brain Box
       </h1>

@@ -5,7 +5,6 @@ import { AuthContext } from "../Context/AuthContext";
 import { db } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-// import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import {
   doc,
@@ -41,7 +40,6 @@ const ChapterItem = ({ subject }) => {
     console.log("Resource link : ", resourceLink);
     console.log("Chapter : ", chapter);
 
-    //search for the chapter in the chapters array
     const chapterToUpdate = Object.keys(chapters).find(
       (chapterKey) => chapters[chapterKey] === chapter
     );

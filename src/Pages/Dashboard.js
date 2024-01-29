@@ -33,8 +33,7 @@ const Dashboard = () => {
       }
 
       fetchStudent();
-    } 
-    else {
+    } else {
       setLoading(false);
     }
   }, [currentUser.uid]);

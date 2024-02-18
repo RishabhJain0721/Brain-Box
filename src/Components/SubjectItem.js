@@ -47,8 +47,8 @@ const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => {
   };
 
   return (
-    <div className="bg-gray-800 text-white p-4 rounded-md mb-4">
-      <h2 className="text-l mb-2 text-center">
+    <div className="bg-blue-400 text-red p-4 rounded-md mb-4">
+      <h2 className="text-xl mb-2 text-center">
         {subjects.map((subject, index) => (
           <div key={index} className="flex items-center">
             <span>{subject.name}</span>
@@ -63,7 +63,7 @@ const SubjectItem = ({ subjects, setUpdatedSubjectsList }) => {
         ))}
       </h2>
       <button
-        className="bg-purple-600 text-white px-2 py-1 rounded-md text-sm"
+        className="bg-purple-800 text-blue px-2 py-1 rounded-md text-m"
         onClick={handleAddSubjectClick}
       >
         Add Subject

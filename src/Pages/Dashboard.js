@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { AuthContext } from "../Context/AuthContext";
-
 import SubjectNav from "../Components/SubjectNav";
 import ChapterList from "../Components/ChapterList";
 import CheckList from "../Components/CheckList";
@@ -17,11 +15,9 @@ const Dashboard = () => {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    // Get the current user's uid from Firebase Authentication
     const userUid = currentUser.uid;
 
     if (userUid) {
-      // Fetch the user's document based on their uid
       async function fetchStudent() {
         const studentDocRef = doc(db, "students", userUid);
         try {
@@ -45,17 +41,17 @@ const Dashboard = () => {
   }, [currentUser.uid]);
 
   return (
-    <div className="p-6 bg-gray-900 text-white min-h-screen">
-      <h1 className="text-8xl max-sm:text-4xl text-center font-bold text-purple-600 mb-4 w-full">
+    <div className="p-6 bg-gradient-to-r from-blue-300 to-purple-400 text-white min-h-screen">
+      <h1 className="text-4xl md:text-8xl text-center font-bold mb-4">
         Brain Box
       </h1>
       <CheckList student={student}/>
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-center">Loading...</p>
       ) : error ? (
-        <p>{error}</p>
+        <p className="text-center text-red-500">{error}</p>
       ) : (
-        <div className="flex flex-col md:flex-row md:space-x-4 mb-6">
+        <div className="flex flex-col md:flex-row md:space-x-4">
           <SubjectNav student={student} />
 
           <div className="flex-grow">

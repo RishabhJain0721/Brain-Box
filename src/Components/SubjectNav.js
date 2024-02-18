@@ -47,7 +47,7 @@ const SubjectNav = ({ student }) => {
 
   return (
     <div className={`md:w-4/7 h-max max-sm:absolute max-sm:top-0 max-sm:h-screen max-sm:w-[90%] duration-300 ${isNavExpanded ? "left-0" : "-left-full"}`}>
-      <div className="bg-gray-800 text-white p-4 rounded-md mb-4 h-full">
+      <div className="bg-gray-700 text-white p-4 rounded-md mb-4 h-full">
         <div className=" fixed top-4 left-4 text-2xl z-30 lg:hidden sm:block"
           onClick={()=> setIsNavExpanded(!isNavExpanded)}>
           <FontAwesomeIcon icon={isNavExpanded ? faArrowLeft : faBars} />
@@ -57,9 +57,9 @@ const SubjectNav = ({ student }) => {
           <SubjectItem subjects={updatedSubjectsList} setUpdatedSubjectsList={setUpdatedSubjectsList} />
         </ul>
         <div className="flex flex-col items-center mt-6">
-          <span className="font-semibold mb-1 mt-7">{student.name}</span>
+          <span className="font-bold mb-1 mt-7">{student.name}</span>
           <button
-            className="block bg-red-600 text-white px-2 py-1 rounded-md mt-1 text-sm"
+            className="block bg-red-600 text-white px-3 py-2 rounded-md mt-1 text-sm"
             onClick={handleLogout}
           >
             Log Out

@@ -1,0 +1,26 @@
+import React, { useState } from 'react';
+
+function SubjectList() {
+  const [subjects, setSubjects] = useState(['Subject A', 'Subject B', 'Subject C']);
+
+  const handleDelete = (index) => {
+    // Update the state to remove the subject at the given index
+    setSubjects(subjects.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div>
+      <h1>Subjects</h1>
+      <ul>
+        {subjects.map((subject, index) => (
+          <li key={index}>
+            {subject}{' '}
+            <button onClick={() => handleDelete(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default SubjectList;
